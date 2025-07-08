@@ -1,15 +1,19 @@
 import { useDispatch } from 'react-redux'
 import { createAnecdote } from '../reducers/anecdoteReducer'
+import { showNotification, hideNotification } from '../reducers/notificationReducer'
 
 const App = () => {
   const dispatch = useDispatch()
 
   const create = (event) => {
     event.preventDefault()
-    console.log(event.target)
     const text = event.target.anecdote.value
     event.target.anecdote.value = ''
     dispatch(createAnecdote(text))
+    dispatch(showNotification(`you created '${text}'`))
+        setTimeout(() => {
+            dispatch(hideNotification())
+        }, 3000);
   }
 
   return (
